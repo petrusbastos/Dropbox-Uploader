@@ -370,7 +370,12 @@ function ensure_accesstoken
     $CURL_BIN $CURL_ACCEPT_CERTIFICATES $API_OAUTH_TOKEN -d grant_type=refresh_token -d refresh_token=$OAUTH_REFRESH_TOKEN -u $OAUTH_APP_KEY:$OAUTH_APP_SECRET -o "$RESPONSE_FILE" 2>/dev/null
     check_http_response
     OAUTH_ACCESS_TOKEN=$(sed -n 's/.*"access_token": "\([^"]*\).*/\1/p' "$RESPONSE_FILE")
-
+    
+    if [ -z "$OAUTH_ACCESS_TOKEN" ]
+    then
+      $OAUTH_ACCESS_TOKEN = $OAUTH_ACCESS_TOKEN_DEFAULT    
+    fi
+    
     local expires_in=$(sed -n 's/.*"expires_in": \([0-9]*\).*/\1/p' "$RESPONSE_FILE")
 
     # one minute safety buffer
