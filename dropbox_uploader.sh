@@ -371,10 +371,7 @@ function ensure_accesstoken
     check_http_response
     OAUTH_ACCESS_TOKEN=$(sed -n 's/.*"access_token": "\([^"]*\).*/\1/p' "$RESPONSE_FILE")
     
-    if [ -z "$OAUTH_ACCESS_TOKEN" ]
-    then
-      $OAUTH_ACCESS_TOKEN = $OAUTH_ACCESS_TOKEN_DEFAULT    
-    fi
+    
     
     local expires_in=$(sed -n 's/.*"expires_in": \([0-9]*\).*/\1/p' "$RESPONSE_FILE")
 
